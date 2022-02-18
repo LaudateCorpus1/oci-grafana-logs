@@ -28,8 +28,10 @@ case $OS in
   *) ;;
 esac
 
+go mod vendor
+
 if [[ ! -d ./vendor ]]; then
-  echo "dependencies not installed try running: dep ensure"
+  echo "dependencies not installed try running | go mod vendor didn't work as expected"
   exit 1
 fi
 
@@ -37,10 +39,10 @@ echo "building go binary"
 #GOOS=$GOOS go build -o ./dist/oci-plugin$POST
 
 # For debugger
- GOOS=$GOOS go build -o ./dist/oci-plugin$POST -gcflags="all=-N -l"
+ GOOS=$GOOS go build -o ./dist/oci-logs-plugin$POST -gcflags="all=-N -l"
 
 # For release
- GOOS=linux go build -o ./dist/oci-plugin_linux_amd64
+ GOOS=linux go build -o ./dist/oci-logs-plugin_linux_amd64
 # GOOS=windows GOARCH=amd64 go build -o ./dist/oci-plugin_windows_amd64.exe
 # tar cvf plugin.tar ./dist
 
